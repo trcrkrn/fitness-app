@@ -1,7 +1,9 @@
-deploy: agile-citadel-27465
+language: node_js
+node_js: node
+deploy: 
   provider: heroku
   api_key:
     secure: meApfjQw/f+kvupxHOjvN4pqikpHWmV+aVkgF+p0LvcismCVuMQRnGr78hPX/eey2KDokh4rK9YIxknsOlxHCOZeWAlNjqkibwTqwxHRcrsHRLBxdzSow7O+EuPCgDlrgaa+YW+PJUZtlqC0eBAy/1uaUp+Z8DvveQh3DupXBhPOMd+xouZz4SoZUaMU4X8VD9uoqiRQxv7tYmUnexYLyQxd2Sn/hvndv5eiAlUKOx1a7Z66zF9Hov7J1goCWFOUysvFGdlNgG858dGxy7X/YepAxvk61hrDYWuR1xtlTv80NAh5CBRBSnmWjl9EqGtlAtcxHM7jB0z89myaINeNmwOEYwB192OvCthHpvpReio+U+BER3JfEDEc6KVZXOVLO2Uc8llH8ewzQxRzSsYpLs0ql87YA/XKSyifWAHtS9iwk1XxjPA1quCvDyexcj+7C09msaVra275Kp1YLzCGJbRBU1Fg/SByJxh7nitVSoSkTnD14ybXLlVk865RrV0HqNlcJyk/lqOT6RCGi0azDmdw36M0rZ4LTXwXJJlVRNuyw3/A4qy9uf3lVVsPDBPf1IZnJY5a3JNDSGEY4u/whol8BdbaPtzXlqVesYGN9ccqCpOVuPbNmqtr0rmqH1nb+rkiunNSOcWTErLnOF3R3gz6JVSn2FXlxA8W8UgALjg=
-  app: fitness-app
+  app: agile-citadel-27465
   on:
     repo: trcrkrn/fitness-app

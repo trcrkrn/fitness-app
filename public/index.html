@@ -5,8 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <p>Hello world</p>
+
+    <div id="login-screen">
+        <h1>Fitness App</h1>
+        <form action="#">
+            <input type="textbox" placeholder="Email">
+            <input type="textbox" placeholder="Password">
+            <button role="button" type="submit">Sign up</button>
+            <button role="button" type="submit">Log in</button>            
+        </form>
+    </div>
+
+    <div id="profile-screen">
+        <h2>Profile</h2>
+        <input placeholder="Name">
+        <input id="age-slider" class="slider" type="range" min="12" max="100" value="25">
+        <p>Age: <span id="age-output"></span> years</p>
+        <input id="weight-slider" class="slider" type="range" min="50" max="400" value="137">
+        <p>Weight: <span id="weight-output"></span> lbs</p>
+        <input id="height-slider" class="slider" type="range" min="50" max="84" value="65">
+        <p>Height: <span id="height-output"></span> inches</p>
+        <button role="button" type="submit">Submit</button>
+    </div>
+
+    <div id="home-screen">
+        <h2>Today's Calories</h2>
+        <p id="daily-calories"></p>
+        <button role="button" type="submit">Change info</button>
+        <button role="button" type="submit">Record new activity</button>
+        <button role="button" type="submit">Record new meal</button>
+    </div>
+
+    <div id="activity-screen">
+        <h2>Record a new activity</h2>
+        <input id="activity-dropdown" placeholder="Activity">
+        <input id="duration-slider" class="slider" type="range" min="1" max="180" value="60">
+        <p>Duration: <span id="duration-output"></span> minutes</p>
+        <button role="button" type="submit">Submit</button>
+    </div>
+
+    <div id="food-screen">
+        <h2>Record a new meal</h2>
+        <input id="food-search" type="textbox" placeholder="Search for food...">
+        <input type="textbox" placeholder="Number of servings...">
+        <button role="button" type="submit">Submit</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
 </body>
 </html>

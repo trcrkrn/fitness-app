@@ -201,6 +201,12 @@ function getExerciseApi(searchTerm, callback) {
     return jQuery.getJSON(exerciseUrl, query, callback)
 };
 
+function getSEarchInstant(searchTerm, callback) {
+    const query = {
+
+    }
+}
+
 
 
 //Demo

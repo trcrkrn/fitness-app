@@ -16,43 +16,52 @@
             <input type="textbox" placeholder="Email">
             <input type="textbox" placeholder="Password">
             <button role="button" type="submit">Sign up</button>
-            <button role="button" type="submit">Log in</button>            
+            <button role="button" type="submit">Log in</button>  
+            <button id="demo-button" role="button" type="submit">Demo</button>            
         </form>
     </div>
 
-    <div id="profile-screen">
+    <div id="profile-screen" hidden>
         <h2>Profile</h2>
         <input placeholder="Name">
+        <input type="radio" name="gender" value="male"> Male<br>
+        <input type="radio" name="gender" value="female"> Female<br>
         <input id="age-slider" class="slider" type="range" min="12" max="100" value="25">
         <p>Age: <span id="age-output"></span> years</p>
         <input id="weight-slider" class="slider" type="range" min="50" max="400" value="137">
         <p>Weight: <span id="weight-output"></span> lbs</p>
         <input id="height-slider" class="slider" type="range" min="50" max="84" value="65">
         <p>Height: <span id="height-output"></span> inches</p>
-        <button role="button" type="submit">Submit</button>
+        <p>Actvity Level</p>
+        <input type="radio" name="activity-level" value="0.2"> Sedentary<br>
+        <input type="radio" name="activity-level" value="0.3"> Light activity<br>
+        <input type="radio" name="activity-level" value="0.4"> Moderate activity<br>
+        <input type="radio" name="activity-level" value="0.5"> High activity<br>
+        <button id="profile-submit" role="button" type="submit">Submit</button>
     </div>
 
-    <div id="home-screen">
+    <div id="home-screen" hidden>
         <h2>Today's Calories</h2>
+        <p id="recommended-calories"></p>
         <p id="daily-calories"></p>
-        <button role="button" type="submit">Change info</button>
-        <button role="button" type="submit">Record new activity</button>
-        <button role="button" type="submit">Record new meal</button>
+        <button id="new-info" role="button" type="submit">Change info</button>
+        <button id="new-activity" role="button" type="submit">Record new activity</button>
+        <button id="new-meal" role="button" type="submit">Record new meal</button>
     </div>
 
-    <div id="activity-screen">
+    <div id="activity-screen" hidden>
         <h2>Record a new activity</h2>
         <input id="activity-dropdown" placeholder="Activity">
         <input id="duration-slider" class="slider" type="range" min="1" max="180" value="60">
         <p>Duration: <span id="duration-output"></span> minutes</p>
-        <button role="button" type="submit">Submit</button>
+        <button id="submit-new-activity" role="button" type="submit">Submit</button>
     </div>
 
-    <div id="food-screen">
+    <div id="meal-screen" hidden>
         <h2>Record a new meal</h2>
         <input id="food-search" type="textbox" placeholder="Search for food...">
         <input type="textbox" placeholder="Number of servings...">
-        <button role="button" type="submit">Submit</button>
+        <button id="submit-new-meal" role="button" type="submit">Submit</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

@@ -1,26 +1,3 @@
-// var MOCK_CALORIE_LOGS = {
-//     "logs": [
-//         {
-//             "id": "1111",
-//             "caloriesBurned": 200,
-//             "caloriesConsumed": 1500,
-//             "date": Date(1521233038)
-//         },
-//         {
-//             "id": "2222",
-//             "caloriesBurned": 300,
-//             "caloriesConsumed": 1600,
-//             "date": Date(1521146637)
-//         },
-//         {
-//             "id": "1111",
-//             "caloriesBurned": 100,
-//             "caloriesConsumed": 1400,
-//             "date": Date(1521060237)
-//         }
-//     ]
-// };
-
 var MOCK_FOOD = {
     "food_log": [
         {
@@ -157,6 +134,7 @@ $(function() {
 })
 
 //sliders
+
 var ageSlider = document.getElementById("age-slider");
 var ageOutput = document.getElementById("age-output");
 ageOutput.innerHTML = ageSlider.value;
@@ -184,4 +162,132 @@ durationOutput.innerHTML = durationSlider.value;
 durationSlider.oninput = function() {
     durationOutput.innerHTML = this.value;
 }
- 
+
+//Natural nutrients api
+
+const nutrionixApiKey = "3ccd5cb21784384417d0b108f86f90e0";
+
+const applicationId = "cb91c8a4";
+
+function getLoggedInUsername() {
+    return "trckrn"
+}
+
+const naturalNutrientsUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+const searchInstantUrl = "https://trackapi.nutritionix.com/v2/search/instant";
+const exerciseUrl = "https://trackapi.nutritionix.com/v2/natural/exercise";
+
+function getNaturalNutrientsApi(searchTerm, callback) {
+    const query = {
+        "query": searchTerm,
+        "x-app-id": applicationId,
+        "x-app-key": nutrionixApiKey,
+        "x-remote-user-id": getLoggedInUsername()
+    };
+    return jQuery.getJSON(naturalNutrientsUrl, query, callback)  
+};
+
+//Exercise API
+
+function getExerciseApi(searchTerm, callback) {
+    const query = {
+        "query": searchTerm,
+        "x-user-jwt": ,
+        "gender": ,
+        "weight_kg",
+        "height_cm":,
+        "age":,
+    };
+    return jQuery.getJSON(exerciseUrl, query, callback)
+};
+
+
+
+//Demo
+
+$(function demoClick() {
+    $("#demo-button").on("click", function() {
+        $("#login-screen").hide();
+        $("#profile-screen").show();
+    });
+})
+
+//BMR calculation
+
+let bmr;
+let adjustedMr;
+
+function findMr() {
+    let adjustedWeight;
+    let height = heightSlider.value;
+    if ($('input[name="gender"]:checked').val() == "female") {
+        if (height >= 60) {
+            adjustedWeight = 100 + (5 * (height - 60));
+        };
+        if (height < 60) {
+            adjustedWeight = 100 - (-5 * (height - 60))
+        }; 
+        bmr = adjustedWeight * 10;
+        adjustedMr = bmr + bmr * ($('input[name="activity-level"]:checked').val());
+    };
+    if ($('input[name="gender"]:checked').val() == "male") {
+        if (height >= 60) {
+            adjustedWeight = 100 + (6 * (height - 60))
+        };
+        if (height < 60) {
+            adjustedWeight = 100 - (-6 * (height - 60))
+        }; 
+        bmr = adjustedWeight * 11;
+        adjustedMr = bmr + bmr * ($('input[name="activity-level"]:checked').val());
+    };
+    console.log(adjustedMr);
+}
+
+$(function profileSubmit() {
+    $("#profile-submit").on("click", function() {
+        findMr();
+        $("#profile-screen").hide();
+        $("#home-screen").show();
+        $("#recommended-calories").append((
+            `<span>Recommended daily caloric intake: ${adjustedMr}</span>`
+        ))
+    });
+})
+
+//buttons on acreens
+
+$(function newActivity() {
+    $("#new-activity").on("click", function() {
+        $("#home-screen").hide();
+        $("#activity-screen").show();
+    })
+})
+
+$(function newMeal() {
+    $("#new-meal").on("click", function() {
+        $("#home-screen").hide();
+        $("#meal-screen").show();
+    })
+});
+
+$(function newInfo() {
+    $("#new-info").on("click", function() {
+        $("#home-screen").hide();
+        $("#profile-screen").show();
+    })
+})
+
+$(function submitNewActivity() {
+    $("#submit-new-activity").on("click", function() {
+        $("#activity-screen").hide();
+        $("#home-screen").show();
+    })
+})
+
+$(function submitNewMeal() {
+    $("#submit-new-meal").on("click", function() {
+        $("#meal-screen").hide();
+        $("#home-screen").show();
+    })
+})
+

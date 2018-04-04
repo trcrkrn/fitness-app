@@ -11,12 +11,14 @@
 <body>
 
     <div id="login-screen">
-        <h1>Fitness App</h1>
-        <form action="#">
-            <input type="textbox" placeholder="Email">
-            <input type="textbox" placeholder="Password">
-            <button role="button" type="submit">Sign up</button>
-            <button role="button" type="submit">Log in</button>  
+        <h1 id="title" >Fitness App</h1>
+        <form action="#" id="login-form">
+            <input class="login-text" type="textbox" placeholder="Email">
+            <input class="login-text" type="textbox" placeholder="Password">
+            <div id="login-buttons">
+                <button role="button" type="submit">Sign up</button>
+                <button role="button" type="submit">Log in</button>  
+            </div>
             <button id="demo-button" role="button" type="submit">Demo</button>            
         </form>
     </div>
@@ -29,9 +31,9 @@
         <input id="age-slider" class="slider" type="range" min="12" max="100" value="25">
         <p>Age: <span id="age-output"></span> years</p>
         <input id="weight-slider" class="slider" type="range" min="50" max="400" value="137">
-        <p>Weight: <span id="weight-output"></span> lbs</p>
+        <p>Weight: <span id="weight-output"></span></p>
         <input id="height-slider" class="slider" type="range" min="50" max="84" value="65">
-        <p>Height: <span id="height-output"></span> inches</p>
+        <p>Height: <span id="height-output"></span></p>
         <p>Actvity Level</p>
         <input type="radio" name="activity-level" value="0.2"> Sedentary<br>
         <input type="radio" name="activity-level" value="0.3"> Light activity<br>
@@ -51,7 +53,7 @@
 
     <div id="activity-screen" hidden>
         <h2>Record a new activity</h2>
-        <input id="activity-dropdown" placeholder="Activity">
+        <input id="activity-search" type="textbox" placeholder="Search for activity...">
         <input id="duration-slider" class="slider" type="range" min="1" max="180" value="60">
         <p>Duration: <span id="duration-output"></span> minutes</p>
         <button id="submit-new-activity" role="button" type="submit">Submit</button>
@@ -59,9 +61,13 @@
 
     <div id="meal-screen" hidden>
         <h2>Record a new meal</h2>
-        <input id="food-search" type="textbox" placeholder="Search for food...">
-        <input type="textbox" placeholder="Number of servings...">
-        <button id="submit-new-meal" role="button" type="submit">Submit</button>
+        <form action="#">
+            <input id="food-search" type="search" placeholder="Search for food...">
+            <button id="add-food" role="button" type="submit">Add</button>
+            <input type="textbox" placeholder="Number of servings...">
+            <button id="submit-new-meal" role="button" type="submit">Submit</button>
+        </form>
+        <p id="meal-log"></p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

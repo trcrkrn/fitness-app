@@ -135,25 +135,36 @@ $(function() {
 
 //sliders
 
+let age;
+let weight;
+let height;
+let weightKg;
+let heightCm;
+
 var ageSlider = document.getElementById("age-slider");
 var ageOutput = document.getElementById("age-output");
 ageOutput.innerHTML = ageSlider.value;
 ageSlider.oninput = function() {
-    ageOutput.innerHTML = this.value;
+    age = this.value;
+    $(ageOutput).html(age);
 }
 
 var weightSlider = document.getElementById("weight-slider");
 var weightOutput = document.getElementById("weight-output");
 weightOutput.innerHTML = weightSlider.value;
 weightSlider.oninput = function() {
-    weightOutput.innerHTML = this.value;
-}
+    weight = this.value;
+    weightKg = Math.round(weight * 0.45359237);
+    $(weightOutput).html(weight + ` lbs (${weightKg} kg)`);
+};
 
 var heightSlider = document.getElementById("height-slider");
 var heightOutput = document.getElementById("height-output");
 heightOutput.innerHTML = heightSlider.value;
 heightSlider.oninput = function() {
-    heightOutput.innerHTML = this.value;
+    height = this.value;
+    heightCm = Math.round(height * 2.54);
+    $(heightOutput).html(height + ` in (${heightCm} cm)`)
 }
 
 var durationSlider = document.getElementById("duration-slider");
@@ -166,7 +177,6 @@ durationSlider.oninput = function() {
 //Natural nutrients api
 
 const nutrionixApiKey = "3ccd5cb21784384417d0b108f86f90e0";
-
 const applicationId = "cb91c8a4";
 
 function getLoggedInUsername() {
@@ -177,14 +187,26 @@ const naturalNutrientsUrl = "https://trackapi.nutritionix.com/v2/natural/nutrien
 const searchInstantUrl = "https://trackapi.nutritionix.com/v2/search/instant";
 const exerciseUrl = "https://trackapi.nutritionix.com/v2/natural/exercise";
 
+function getNutrionixJson(url, query, callback, type) {
+    return $.ajax({
+        type: type, 
+        dataType: "JSON",
+        beforeSend: function(request) {
+          request.setRequestHeader("x-app-id", applicationId);
+          request.setRequestHeader("x-app-key", nutrionixApiKey);
+          request.setRequestHeader("x-remote-user-id", 0)
+        },
+        url: url,
+        data: query,
+        success: callback
+      });
+}
+
 function getNaturalNutrientsApi(searchTerm, callback) {
     const query = {
         "query": searchTerm,
-        "x-app-id": applicationId,
-        "x-app-key": nutrionixApiKey,
-        "x-remote-user-id": getLoggedInUsername()
     };
-    return jQuery.getJSON(naturalNutrientsUrl, query, callback)  
+    return getNutrionixJson(naturalNutrientsUrl, query, callback, "post")  
 };
 
 //Exercise API
@@ -192,22 +214,30 @@ function getNaturalNutrientsApi(searchTerm, callback) {
 function getExerciseApi(searchTerm, callback) {
     const query = {
         "query": searchTerm,
-        "x-user-jwt": ,
-        "gender": ,
-        "weight_kg",
-        "height_cm":,
-        "age":,
+        "gender": $('input[name="gender"]:checked').val(),
+        "weight_kg": weightKm,
+        "height_cm": heightCm,
+        "age": age,
     };
-    return jQuery.getJSON(exerciseUrl, query, callback)
+    return getNutrionixJson(exerciseUrl, query, callback, "post")
 };
 
-function getSEarchInstant(searchTerm, callback) {
+//SEarch instant API
+
+function getSearchInstant(searchTerm, callback) {
     const query = {
-
-    }
+        "query": searchTerm,
+        "branded": true ,
+        "brand_ids": false,
+        "self": true, //include users food log results
+        "common": true, //include common food results
+        "locale": "en_US",
+        "detailed": false,
+    //     "branded-region": null,
+    //     "branded-type": null,
+    };
+    return getNutrionixJson(searchInstantUrl, query, callback, "get")
 }
-
-
 
 //Demo
 
@@ -215,6 +245,7 @@ $(function demoClick() {
     $("#demo-button").on("click", function() {
         $("#login-screen").hide();
         $("#profile-screen").show();
+        console.log(height);
     });
 })
 
@@ -249,6 +280,10 @@ function findMr() {
     console.log(adjustedMr);
 }
 
+
+
+//buttons on screens
+
 $(function profileSubmit() {
     $("#profile-submit").on("click", function() {
         findMr();
@@ -259,8 +294,6 @@ $(function profileSubmit() {
         ))
     });
 })
-
-//buttons on acreens
 
 $(function newActivity() {
     $("#new-activity").on("click", function() {
@@ -287,6 +320,7 @@ $(function submitNewActivity() {
     $("#submit-new-activity").on("click", function() {
         $("#activity-screen").hide();
         $("#home-screen").show();
+
     })
 })
 
@@ -297,3 +331,63 @@ $(function submitNewMeal() {
     })
 })
 
+$(function addNewMeal() {
+    $("#add-food").on("click", function() {
+        let queryFoodTarget = $("form").find("#food-search");
+        let food = queryFoodTarget.val();
+        getSearchInstant(food, createMealLog)
+    })
+})
+
+function createMealLog(food) {
+    console.log(food);
+    if (!food.branded) {
+        return;
+    } else {
+        for (i = 0; i < food.branded.length; i++) {
+            if (food.branded[i].photo.thumb == null) {
+                $("#meal-log").append("<p>" + food.branded[i].food_name + "</p>");
+            } else {
+                $("#meal-log").append("<p>" + food.branded[i].food_name + "<img src=" + food.branded[i].photo.thumb + "></p>")
+        };
+    };
+    if (!food.common) {
+        return;
+    } else {
+        for (i = 0; i < food.common.length; i++) {
+            if (food.common[i].photo.thumb == null) {
+                $("#meal-log").append("<p>" + food.common[i].food_name + "</p>");
+            } else {
+                $("#meal-log").append("<p>" + food.common[i].food_name + "<img src=" + food.common[i].photo.thumb + "></p>")
+                };
+            };
+        }; 
+    };
+};
+
+let previousSearchTerm;
+
+$(function autocompleteFood() {
+    $(document).keypress(function(event) {
+        console.log("keypressed: ", String.fromCharCode(event.charCode || event.keyCode));
+        if (!$("#food-search:focus").length) return;
+        let food = $(this).val();
+        if (food === previousSearchTerm) return;
+        console.log("Searching for: ", food);
+        getNaturalNutrientsApi(food, createMealLog)
+        previousSearchTerm = food;
+    })
+})
+
+//use settimeout
+
+
+// dropdown button 
+
+// $(function dropdownFood () {
+//     $("#food-search")
+// })
+
+// $(function searchFoodByLetter () {
+//     $("#food-search").
+// })

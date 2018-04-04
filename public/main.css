@@ -39,3 +39,33 @@
     background: #4CAF50;
     cursor: pointer;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    padding: 25px;
+    font-size: 50px;
+}
+
+.login-text {
+    margin: 5px;
+    width: 150%;
+    height: 25px
+}
+
+#login-buttons {
+    width: 100%;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between
+}

@@ -5,6 +5,10 @@
     justify-content: center */
 }
 
+html { 
+    box-sizing: border-box;
+}
+
 .slider {
     -webkit-appearance: none;
     appearance: none;
@@ -47,19 +51,31 @@ body {
     align-items: center;
 }
 
+/* login screen */
+
+#login-screen {
+    width: 100%;
+}
+
 #title {
     padding: 25px;
     font-size: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 .login-text {
     margin: 5px;
-    width: 150%;
+    padding: 5px;
+    width: 33%;
     height: 25px
 }
 
-#login-buttons {
-    width: 100%;
+.login-screen-buttons {
+    padding: 25px;
+    margin: 5px;
+    width: 33%;
+    height: 25px
 }
 
 #login-form {
@@ -67,5 +83,48 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    justify-content: space-between
+    justify-content: space-between;
+    width: 100%
+}
+
+#password-checkbox {
+    display: block;
+    
+}
+
+/* profile screen */
+
+#profile-screen {
+    
+}
+
+h2 {
+    display: flex;
+    justify-content: center
+}
+
+#user-name {
+    width: 100%;
+    margin: 10px
+}
+
+#age-slider, #weight-slider, #height-slider {
+    width: 100%;
+    margin: 10px
+}
+
+/* home-screen */
+
+#home-screen {
+    
+}
+
+/*activity-screen*/
+#activity-screen {
+    
+}
+
+/*meal-screen*/
+#meal-screen {
+    
 }

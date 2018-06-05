@@ -1,79 +1,3 @@
-var MOCK_FOOD = {
-    "food_log": [{
-            "id": 11122,
-            "brand_name": "Similac",
-            "item_name": "Formula, Soy, for Diarrhea, Ready-to-Feed",
-            "item_id": "51db37c3176fe9790a899200",
-            "nf_servings_per_container": null,
-            "nf_serving_size_qty": 5,
-            "nf_serving_size_unit": "fl oz",
-            "metric_qty": null,
-            "metric_uom": null,
-            "nf_calories": 100,
-            "user": 1234,
-            "date": Date(1521060237),
-            "comment": "mmm, tastes great",
-            "user_qty": 1,
-        },
-        {
-            "id": 11122,
-            "brand_name": "Similac",
-            "item_name": "Formula, Soy, for Diarrhea, Ready-to-Feed",
-            "item_id": "51db37c3176fe9790a899200",
-            "nf_servings_per_container": null,
-            "nf_serving_size_qty": 5,
-            "nf_serving_size_unit": "fl oz",
-            "metric_qty": null,
-            "metric_uom": null,
-            "nf_calories": 100,
-            "user": 1234,
-            "date": Date(1521062237),
-            "comment": "mmm, tastes great",
-            "user_qty": 2
-        }
-    ]
-}
-
-var MOCK_ACTIVITY = {
-    "activityLog": [{
-            "activityId": 18240,
-            "calories": 1476,
-            "description": "",
-            "distance": 0,
-            "duration": 10983000,
-            "name": "Swimming laps, freestyle, slow, moderate or light effort",
-            "user": 1234,
-            "date": Date(1521060237),
-            "comment": "swam",
-            "userDuration": 1800000
-        },
-        {
-            "activityId": 18240,
-            "calories": 1476,
-            "description": "",
-            "distance": 0,
-            "duration": 10983000,
-            "name": "Swimming laps, freestyle, slow, moderate or light effort",
-            "user": 1234,
-            "date": Date(1521080237),
-            "comment": "swam",
-            "userDuration": 1000000
-        },
-        {
-            "activityId": 18240,
-            "calories": 1476,
-            "description": "",
-            "distance": 0,
-            "duration": 10983000,
-            "name": "Swimming laps, freestyle, slow, moderate or light effort",
-            "user": 1235,
-            "date": Date(1521070237),
-            "comment": "swam",
-            "userDuration": 1500000
-        }
-    ]
-}
-
 function getUserActivityCalories(user, date) {
     let filteredActivities = MOCK_ACTIVITY.activityLog;
     filteredActivities = filteredActivities.filter(activity => activity.user === user && activity.date === date);
@@ -111,7 +35,7 @@ function getLogObject(user, date) {
 }
 
 function getRecentLogs(callback) {
-    //replace with real datavase call
+    //replace with real database call
     let logs = [getLogObject(1234, Date(1521070237))];
     callback(logs);
 }
@@ -151,7 +75,7 @@ ageSlider.oninput = function () {
 
 var weightSlider = document.getElementById("weight-slider");
 var weightOutput = document.getElementById("weight-output");
-weightOutput.innerHTML = weightSlider.value;
+weightOutput.innerHTML = weightSlider.value + " lbs";
 weightSlider.oninput = function () {
     weight = this.value;
     weightKg = Math.round(weight * 0.45359237);
@@ -160,85 +84,19 @@ weightSlider.oninput = function () {
 
 var heightSlider = document.getElementById("height-slider");
 var heightOutput = document.getElementById("height-output");
-heightOutput.innerHTML = heightSlider.value;
+heightOutput.innerHTML = heightSlider.value + " in";
 heightSlider.oninput = function () {
     height = this.value;
     heightCm = Math.round(height * 2.54);
     $(heightOutput).html(height + ` in (${heightCm} cm)`)
 }
 
-var durationSlider = document.getElementById("duration-slider");
-var durationOutput = document.getElementById("duration-output");
-durationOutput.innerHTML = durationSlider.value;
-durationSlider.oninput = function () {
-    durationOutput.innerHTML = this.value;
-}
-
-//Natural nutrients api
-
-const nutrionixApiKey = "3ccd5cb21784384417d0b108f86f90e0";
-const applicationId = "cb91c8a4";
-
-function getLoggedInUsername() {
-    return "trckrn"
-}
-
-const naturalNutrientsUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
-const searchInstantUrl = "https://trackapi.nutritionix.com/v2/search/instant";
-const exerciseUrl = "https://trackapi.nutritionix.com/v2/natural/exercise";
-
-function getNutrionixJson(url, query, callback, type) {
-    return $.ajax({
-        type: type,
-        dataType: "JSON",
-        beforeSend: function (request) {
-            request.setRequestHeader("x-app-id", applicationId);
-            request.setRequestHeader("x-app-key", nutrionixApiKey);
-            request.setRequestHeader("x-remote-user-id", 0)
-        },
-        url: url,
-        data: query,
-        success: callback
-    });
-}
-
-function getNaturalNutrientsApi(searchTerm, callback) {
-    const query = {
-        "query": searchTerm,
-    };
-    return getNutrionixJson(naturalNutrientsUrl, query, callback, "post")
-};
-
-//Exercise API
-
-function getExerciseApi(searchTerm, callback) {
-    const query = {
-        "query": searchTerm,
-        "gender": $('input[name="gender"]:checked').val(),
-        "weight_kg": weightKm,
-        "height_cm": heightCm,
-        "age": age,
-    };
-    return getNutrionixJson(exerciseUrl, query, callback, "post")
-};
-
-//SEarch instant API
-
-function getSearchInstant(searchTerm, callback) {
-    const query = {
-        "query": searchTerm,
-        "branded": true,
-        "brand_ids": false,
-        "self": true, //include users food log results
-        "common": true, //include common food results
-        "locale": "en_US",
-        "detailed": false,
-        //     "branded-region": null,
-        //     "branded-type": null,
-    };
-    if (query === null) return;
-    return getNutrionixJson(searchInstantUrl, query, callback, "get")
-}
+// var durationSlider = document.getElementById("duration-slider");
+// var durationOutput = document.getElementById("duration-output");
+// durationOutput.innerHTML = durationSlider.value;
+// durationSlider.oninput = function () {
+//     durationOutput.innerHTML = this.value;
+// }
 
 //Demo
 
@@ -301,6 +159,13 @@ $(function signUp() {
     })
 })
 
+$(function loginButton() {
+    $("#login-button").on("click", function () {
+        $("#login-screen").hide();
+        $("#home-screen").show();
+    })
+})
+
 $(function profileSubmit() {
     $("#profile-submit").on("click", function () {
         findMr();
@@ -348,166 +213,3 @@ $(function submitNewMeal() {
     })
 })
 
-// $(function addNewMeal() {
-//     $("#add-food").on("click", function() {
-//         let queryFoodTarget = $("form").find("#food-search");
-//         let food = queryFoodTarget.val();
-//         getSearchInstant(food, createMealLog)
-//     })
-// })
-
-// $(function autocompleteFood() {
-//     $(document).keypress(function(event) {
-//         console.log("keypressed: ", String.fromCharCode(event.charCode || event.keyCode));
-//         if (!$("#food-search:focus").length) return;
-//         let food = $(this).val();
-//         if (food === previousSearchTerm) return;
-//         console.log("Searching for: ", food);
-//         getNaturalNutrientsApi(food, createMealLog)
-//         previousSearchTerm = food;
-//     })
-// })
-
-//typeahead autocomplete for food
-
-const notFoundTemplate = function (suggestion) {
-    return `<div></div>`
-}
-
-const pendingTemplate = function (suggestion) {
-    return `<div></div>`
-}
-
-const headerTemplate = function (suggestion) {
-    return `<div></div>`
-}
-
-const footerTemplate = function (suggestion) {
-    return `<div></div>`
-}
-
-const suggestionTemplate = function (suggestion) {
-    return `<div>${suggestion.food_name}</div>`
-}
-
-$(function autocompleteFood() {
-
-    // let searchTerm = $("form").find("#food-search").val();
-    // console.log("typeahead searchTerm: " + searchTerm);
-    // if (searchTerm === "") return;
-    $('#food-search').typeahead({
-        minLength: 3,
-        highlight: true,
-    // }, {
-        name: 'food',
-        limit: 6,
-        templates: {
-            notFound: notFoundTemplate,
-            pending: pendingTemplate,
-            header: headerTemplate,
-            footer: footerTemplate,
-            suggestion: suggestionTemplate
-        },
-        async: true,
-        source: function (query, syncResults, asyncResults) {
-            console.log("typeahead searching on: " + query);
-            getFoodSuggestions(query, function (results) {
-                let foodSuggestions = [];
-                // let foodSuggestions = results.branded.slice(0,3)
-                //     .concat(results.common.slice(0,3));
-                //for (i = 0, j = 0, i++, j++)
-                //array.push()
-                for (i = 0, j = 0; i < results.branded.length || j < results.common.length; i++, j++) {
-                    if (i < results.branded.length) {
-                        //.tostring returns its food name property
-                        foodSuggestions.push(results.branded[i])
-                    }
-                    if (j < results.common.length) {
-                        foodSuggestions.push(results.common[j])
-                    }
-                };
-                console.log("found food suggestion: " + foodSuggestions);
-                syncResults(foodSuggestions.map(food => food.food_name));
-            });
-            //getFoodSuggestions  
-
-        },
-        afterSelect: function(suggestion) {
-            console.log("user selected: " + suggestion);
-            getNaturalNutrientsApi(suggestion, function(results) {
-                console.log("user selected nutrients: " + suggestion, results)
-            })
-        }
-    });
-})
-
-
-//get names from JSON
-function getFoodSuggestions(searchTerm, callback) {
-    let foodSuggestions = [];
-    let foodJson = getSearchInstant(searchTerm, callback);
-    console.log(foodJson);
-    if (!foodJson.branded) {
-        return;
-    } else {
-        for (i = 0; i < foodJson.branded.length; i++) {
-            foodSuggestions.push(foodJson.branded[i].food_name);
-        };
-    };
-    if (!food.common) {
-        return;
-    } else {
-        for (i = 0; i < foodJson.common.length; i++) {
-            foodSuggestions.push(foodJson.common[i].food_name);
-        };
-    };
-    if (foodSuggestions = []) return;
-    else return {
-        data: foodSuggestions
-    };
-};
-
-function addFoodSuggestion() {
-    $(".suggestion").click(function () {
-        let food = this;
-        $("#submit-new-meal").on("click", function () {
-            $("#meal-log").append("<p>" + food + "</p>")
-        })
-    })
-}
-
-// function createMealLog(food) {
-//     if (!food.branded) {
-//         return;
-//     } else {
-//         for (i = 0; i < food.branded.length; i++) {
-//             if (food.branded[i].photo.thumb == null) {
-//                 $("#meal-log").append("<p>" + food.branded[i].food_name + "</p>");
-//             } else {
-//                 $("#meal-log").append("<p>" + food.branded[i].food_name + "<img src=" + food.branded[i].photo.thumb + "></p>")
-//             };
-//         };
-//         if (!food.common) {
-//             return;
-//         } else {
-//             for (i = 0; i < food.common.length; i++) {
-//                 if (food.common[i].photo.thumb == null) {
-//                     $("#meal-log").append("<p>" + food.common[i].food_name + "</p>");
-//                 } else {
-//                     $("#meal-log").append("<p>" + food.common[i].food_name + "<img src=" + food.common[i].photo.thumb + "></p>")
-//                 };
-//             };
-//         };
-//     };
-// };
-
-// $(function autcompleteActivity() {
-//     let searchTerm = $("form").find("#activity-search").val();
-//     $("activity-search").typeahead({
-//         minLength: 3,
-//         highlght: true,
-//     }, {
-//         name: 'activities',
-//         source: getExerciseApi(searchTerm, callback)
-//     })
-// })

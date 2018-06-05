@@ -25,7 +25,7 @@ function seedActivityLogData() {
     const seedData = [];
     for (let i = 1; i <= 10; i++) {
         seedData.push({
-            created: faker.date.recent(),
+            created: Date(faker.date.recent()),
             activityName: faker.lorem.words(3),
             calories: faker.random.number(),
             comment: faker.lorem.text()
@@ -67,7 +67,7 @@ describe('activity logs API resource', function () {
                     return ActivityLog.count();
                 })
                 .then(count => {
-                    res.body.should.have.length.of(count);
+                    res.body.should.have.length(count);
                 });
         });
 
@@ -110,8 +110,8 @@ describe('activity logs API resource', function () {
         it('should add a new activity log', function () {
 
             const newPost = {
-                created: faker.date.recent(),
-                activityName: faker.random.bs_noun(),
+                created: Date(faker.date.recent()),
+                activityName: faker.random.words(1),
                 calories: faker.random.number(),
                 comment: faker.lorem.text()
             };
@@ -149,7 +149,7 @@ describe('activity logs API resource', function () {
         //  4. Prove post in db is correctly updated
         it('should update fields you send over', function () {
             const updateData = {
-                created: 1522732432,
+                created: Date(1522732432),
                 activityName: "ran 1 mile",
                 calories: 125,
                 comment: "not too bad"

@@ -25,7 +25,7 @@ function seedMealLogData() {
     const seedData = [];
     for (let i = 1; i <= 10; i++) {
         seedData.push({
-            created: faker.date.recent(),
+            created: Date(faker.date.recent()),
             mealName: faker.lorem.words(3),
             calories: faker.random.number(),
             comment: faker.lorem.text()
@@ -67,7 +67,7 @@ describe('meal logs API resource', function () {
                     return MealLog.count();
                 })
                 .then(count => {
-                    res.body.should.have.length.of(count);
+                    res.body.should.have.length(count);
                 });
         });
 
@@ -110,8 +110,8 @@ describe('meal logs API resource', function () {
         it('should add a new meal log', function () {
 
             const newPost = {
-                created: faker.date.recent(),
-                mealName: faker.random.bs_noun(),
+                created: Date(faker.date.recent()),
+                mealName: faker.random.words(1),
                 calories: faker.random.number(),
                 comment: faker.lorem.text()
             };
@@ -149,7 +149,7 @@ describe('meal logs API resource', function () {
         //  4. Prove post in db is correctly updated
         it('should update fields you send over', function () {
             const updateData = {
-                created: 1522732432,
+                created: Date(1522732432),
                 mealName: "bowl of cereal, 1 cup of milk",
                 calories: 125,
                 comment: "tasted great"
@@ -165,7 +165,7 @@ describe('meal logs API resource', function () {
                         .send(updateData);
                 })
                 .then(res => {
-                    res.should.have.status(204);
+                    expect(res).should.have.status(200);
                     return MealLog.findById(updateData.id);
                 })
                 .then(post => {

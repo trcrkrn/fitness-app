@@ -20,6 +20,7 @@ describe('Auth endpoints', function () {
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
+  const email = 'email@gmail.com';
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
@@ -35,7 +36,8 @@ describe('Auth endpoints', function () {
         username,
         password,
         firstName,
-        lastName
+        lastName,
+        email
       })
     );
   });
@@ -111,7 +113,8 @@ describe('Auth endpoints', function () {
           expect(payload.user).to.deep.equal({
             username,
             firstName,
-            lastName
+            lastName,
+            email
           });
         });
     });

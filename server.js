@@ -9,6 +9,8 @@ const passport = require('passport');
 
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+const { router: mealsRouter } = require('./meals');
+const { router: activitiesRouter } = require('./activities');
 
 mongoose.Promise = global.Promise;
 
@@ -99,7 +101,7 @@ app.put('/meals/:id', (req, res) => {
 
   MealLog
     .findByIdAndUpdate(req.params.id, {$set:updated}, {new:true})
-    .then(updatedPost => res.status(204).end())
+    .then(updatedPost => res.status(200).json(updatedPost))
     .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
@@ -226,6 +228,9 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
+
+app.use('/api/meals/', jwtAuth, mealsRouter);
+app.use('/api/activities/', jwtAuth, activitiesRouter);
 
 // A protected endpoint which needs a valid JWT to access it
 app.get('/api/protected', jwtAuth, (req, res) => {

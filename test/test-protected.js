@@ -20,6 +20,7 @@ describe('Protected endpoint', function() {
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
+  const email = 'email@gmail.com';
 
   before(function() {
     return runServer(TEST_DATABASE_URL);
@@ -35,7 +36,8 @@ describe('Protected endpoint', function() {
         username,
         password,
         firstName,
-        lastName
+        lastName,
+        email
       })
     );
   });
@@ -67,7 +69,8 @@ describe('Protected endpoint', function() {
         {
           username,
           firstName,
-          lastName
+          lastName,
+          email
         },
         'wrongSecret',
         {
@@ -98,7 +101,8 @@ describe('Protected endpoint', function() {
           user: {
             username,
             firstName,
-            lastName
+            lastName,
+            email
           },
           exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
         },
@@ -131,7 +135,8 @@ describe('Protected endpoint', function() {
           user: {
             username,
             firstName,
-            lastName
+            lastName,
+            email
           }
         },
         JWT_SECRET,

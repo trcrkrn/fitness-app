@@ -89,7 +89,7 @@ body {
 
 #password-checkbox {
     display: block;
-    
+
 }
 
 /* profile screen */
@@ -128,3 +128,14 @@ h2 {
 #meal-screen {
     
 }
+
+.activity-level {
+    margin: 10px;
+}
+
+#profile-submit {
+    margin: 10px
+}
+
+/*meal search drop-down*/
+

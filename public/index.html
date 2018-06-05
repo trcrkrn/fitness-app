@@ -15,12 +15,12 @@
     <div id="login-screen">
         <h1 id="title">Fitness App</h1>
         <form action="#" id="login-form">
-            <input class="login-text" type="text" placeholder="Email">
+            <input class="login-text" type="text" placeholder="Username">
             <input id="password" class="login-text" type="password" placeholder="Password">
             <input id="password-checkbox" type="checkbox">Show Password
             <div id="login-buttons">
                 <button class="login-screen-button" id="sign-up-button" role="button" type="submit">Sign up</button>
-                <button class="login-screen-button" role="button" type="submit">Log in</button>
+                <button class="login-screen-button" id="login-button" role="button" type="submit">Log in</button>
                 <button class="login-screen-button" id="demo-button" role="button" type="submit">Demo</button>
             </div>
         </form>
@@ -28,7 +28,20 @@
 
     <div id="profile-screen" hidden>
         <h2>Profile</h2>
-        <input id="user-name" placeholder="Name">
+        <h3>Name</h3>
+        <input class="user-name" type="text" placeholder="First name">
+        <input class="user-name" type="text" placeholder="Last name">
+        <button type="submit" class="update-profile">Submit</button>
+        <h3>User Info</h3>
+        <p>Username: </p>
+        <input type="text">
+        <button type="submit" class="update-profile">Update username</button>
+        <p>Email: </p>
+        <input type="text">
+        <button type="submit" class="update-profile">Update email</button>
+        <p>Password: </p>
+        <input type="text">
+        <button type="submit" class="update-profile">Update password</button>
         <h3>Gender:</h3>
         <input type="radio" name="gender" value="male"> Male
         <br>
@@ -75,27 +88,33 @@
     <div id="activity-screen" hidden>
         <h2>Record a new activity</h2>
         <form action="#" id="activity-form">
-            <input id="activity-search" class="typeahead" type="search" placeholder="Search for activity...">
-            <input id="duration-slider" class="slider" type="range" min="1" max="180" value="60">
-            <p>Duration:
-                <span id="duration-output"></span> minutes</p>
+            <input id="activity-search" class="" type="text" placeholder="Enter your workout">
             <button id="submit-new-activity" role="button" type="submit">Submit</button>
         </form>
     </div>
 
     <div id="meal-screen" hidden>
         <h2>Record a new meal</h2>
-        <form action="#" id="meal-form">
+        <form action="#" id="food-form">
             <input id="food-search" class="typeahead" type="text" autocomplete="off" placeholder="Search for food...">
             <button id="add-food" role="button" type="submit">Add</button>
-            <input type="textbox" placeholder="Number of servings...">
+            <input type="text" placeholder="Number of servings...">
             <button id="submit-new-meal" role="button" type="submit">Submit</button>
         </form>
-        <p id="meal-log"></p>
+        <form action="#" id="meal-form">
+            <input type="text" id="meal-name">        
+            <button role="button" type="submit">Submit Meal</button>
+        </form>
+        <div id="meal-log"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+    <script type="text/javascript" src="mockdata.js"></script>
+    <script type="text/javascript" src="nutrionix.js"></script>
+    <script type="text/javascript" src="meals.js"></script>
+    <script type="text/javascript" src="activities.js"></script>
+    <script type="text/javascript" src="typeahead.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </body>
 
